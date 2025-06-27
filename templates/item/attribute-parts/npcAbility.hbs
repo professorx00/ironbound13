@@ -1,0 +1,84 @@
+{{! Attributes Tab }}
+<section
+  class='tab attributes {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='attributes'
+>
+  {{! As you add new fields, add them in here! }}
+  <div>
+      <div>
+        {{system.abilityType}}
+      </div>
+      <div>
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.ap'}}:</label>
+        <input
+              type='text'
+              name='system.ap'
+              value='{{system.ap}}'
+              data-dtype='Number'
+            />
+      </div>
+      <div>
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.hasBoon'}}:</label>
+        <input type="checkbox" id="hasBoon" name="system.hasBoon" {{checked system.hasBoon}}>
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.passive'}}:</label>
+        <input type="checkbox" id="passive" name="system.passive"  {{checked system.passive}}>
+        <div>
+      </div>
+      </div>
+      <hr/>
+      <div>
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolCost'}}:</label>
+        <input
+            type='text'
+            name='system.poolCost'
+            value='{{system.poolCost}}'
+            data-dtype='Number'
+          />
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolCostType'}}:</label>
+        <select name="system.poolCostType" class="poolCostType">
+          {{selectOptions poolOptions selected=system.poolCostType}}
+        </select>
+      </div>
+      <hr/>
+      <div>
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolBonus'}}:</label>
+        <input
+            type='text'
+            name='system.poolBonus'
+            value='{{system.poolBonus}}'
+            data-dtype='Number'
+          />
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolBonusType'}}:</label>
+        <select name="system.poolBonusType" class="poolBonusType">
+          {{selectOptions poolOptions selected=system.poolBonusType}}
+        </select>
+      </div>
+      <hr/>
+      <div>
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.healingFormula'}}:</label>
+        <input
+            type='text'
+            name='system.healingFormula'
+            value='{{system.healingFormula}}'
+          />
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.healingType'}}:</label>
+        <select name="system.healingType" class="poolBonusType">
+          {{selectOptions poolOptions selected=system.healingType}}
+        </select>
+      </div>
+      <hr/>
+      <div>
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.damageFormula'}}:</label>
+        <input
+            type='text'
+            name='system.damageFormula'
+            value='{{system.damageFormula}}'
+          />
+        <label class='resource-label'>{{localize 'IRONBOUND.Item.Abilities.FIELDS.damageType'}}:</label>
+        <select  name="system.damageType" class="damageType">
+          {{selectOptions poolOptions selected=system.damageType }}
+        </select>
+      </div>
+  </div>
+</section>

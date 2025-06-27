@@ -1,0 +1,262 @@
+<div class='tab abilities {{tab.cssClass}}'>
+  <div><h4>Species Abilities Active</h4></div>
+  <ul class='items-list'>
+    <li class='item flexrow items-header'>
+      <div class='item-name'>{{localize 'Name'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.generic.PoolBonus'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolBonusType'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolCost'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolCostType'}}</div>
+       <div class='item-controls'>
+        {{#if @root.editable}}
+          <a
+            class='item-control item-create'
+            title='{{localize "DOCUMENT.Create" type='Item'}}'
+            data-action='createDoc'
+            data-document-class='Item'
+            data-type='speciesAbility'
+          >
+            <i class='fas fa-plus'></i>
+            {{localize 'DOCUMENT.New' type='item'}}
+          </a>
+        {{/if}}
+      </div>
+    </li>
+{{#each speciesAbilities}}
+  {{#if (isPassive this.system.passive)}}
+    <li
+        class='item flexrow'
+        data-item-id='{{this._id}}'
+        data-drag='true'
+        data-document-class='Item'
+      >
+        <div class='item-name'>
+            <a class='rollable item-icon' data-roll-type='item' data-action='roll'>
+              <i class="fa-solid fa-square-info"></i>
+            </a>
+          <div>{{this.name}}</div>
+        </div>
+          <div>{{this.system.poolBonus}}</div>
+          <div>{{getPoolType this.system.poolBonusType}}</div>
+          <div>{{this.system.poolCost}}</div>
+          <div>{{getPoolType this.system.poolCostType}}</div>
+        <div class='item-controls'>
+          <a
+            class='item-control item-edit'
+            title='{{localize "DOCUMENT.Update" type='speciesAbility'}}'
+            data-action='viewDoc'
+          >
+            <i class='fas fa-edit'></i>
+          </a>
+          {{#if @root.editable}}
+            <a
+              class='item-control item-delete'
+              title='{{localize "DOCUMENT.Delete" type='speciesAbility'}}'
+              data-action='deleteDoc'
+            >
+              <i class='fas fa-trash'></i>
+            </a>
+          {{/if}}
+        </div>
+      </li>
+  {{/if}}
+{{/each}}
+</ul>
+<div><h4>Species Abilities Passive</h4></div>
+  <ul class='items-list'>
+    <li class='item flexrow items-header'>
+      <div class='item-name'>{{localize 'Name'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.generic.PoolBonus'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolBonusType'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolCost'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolCostType'}}</div>
+       <div class='item-controls'>
+        {{#if @root.editable}}
+          <a
+            class='item-control item-create'
+            title='{{localize "DOCUMENT.Create" type='Item'}}'
+            data-action='createDoc'
+            data-document-class='Item'
+            data-type='speciesAbility'
+          >
+            <i class='fas fa-plus'></i>
+            {{localize 'DOCUMENT.New' type='item'}}
+          </a>
+        {{/if}}
+      </div>
+    </li>
+{{#each speciesAbilities}}
+  {{#if this.system.passive}}
+    <li
+        class='item flexrow'
+        data-item-id='{{this._id}}'
+        data-drag='true'
+        data-document-class='Item'
+      >
+        <div class='item-name'>
+           <div class='item-image'>
+            <a class='rollable item-icon' data-roll-type='item' data-action='roll'>
+              <i class="fa-solid fa-square-info"></i>
+            </a>
+          </div>
+          <div>{{this.name}}</div>
+        </div>
+          <div>{{this.system.poolBonus}}</div>
+          <div>{{getPoolType this.system.poolBonusType}}</div>
+          <div>{{this.system.poolCost}}</div>
+          <div>{{getPoolType this.system.poolCostType}}</div>
+        <div class='item-controls'>
+          <a
+            class='item-control item-edit'
+            title='{{localize "DOCUMENT.Update" type='speciesAbility'}}'
+            data-action='viewDoc'
+          >
+            <i class='fas fa-edit'></i>
+          </a>
+          {{#if @root.editable}}
+            <a
+              class='item-control item-delete'
+              title='{{localize "DOCUMENT.Delete" type='speciesAbility'}}'
+              data-action='deleteDoc'
+            >
+              <i class='fas fa-trash'></i>
+            </a>
+          {{/if}}
+        </div>
+      </li>
+  {{/if}}
+{{/each}}
+</ul>
+
+<div><h4>Class Abilities Active</h4></div>
+    <ul class='items-list'>
+    <li class='item flexrow items-header'>
+      <div class='item-name'>{{localize 'Name'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.generic.PoolBonus'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolBonusType'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolCost'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolCostType'}}</div>
+       <div class='item-controls'>
+        {{#if @root.editable}}
+          <a
+            class='item-control item-create'
+            title='{{localize "DOCUMENT.Create" type='Item'}}'
+            data-action='createDoc'
+            data-document-class='Item'
+            data-type='classAbility'
+          >
+            <i class='fas fa-plus'></i>
+            {{localize 'DOCUMENT.New' type='item'}}
+          </a>
+        {{/if}}
+      </div>
+    </li>
+{{#each classAbilities}}
+  {{#if (isPassive this.system.passive)}}
+    <li
+        class='item flexrow'
+        data-item-id='{{this._id}}'
+        data-drag='true'
+        data-document-class='Item'
+      >
+        <div class='item-name'>
+          <div class='item-image'>
+            <a class='rollable item-icon' data-roll-type='item' data-action='roll'>
+              <i class="fa-solid fa-square-info"></i>
+            </a>
+          </div>
+          <div>{{this.name}}</div>
+        </div>
+        <div>{{this.system.poolBonus}}</div>
+        <div>{{getPoolType this.system.poolBonusType}}</div>
+        <div>{{this.system.poolCost}}</div>
+        <div>{{getPoolType this.system.poolCostType}}</div>
+        <div class='item-controls'>
+          <a
+            class='item-control item-edit'
+            title='{{localize "DOCUMENT.Update" type='classAbility'}}'
+            data-action='viewDoc'
+          >
+            <i class='fas fa-edit'></i>
+          </a>
+          {{#if @root.editable}}
+            <a
+              class='item-control item-delete'
+              title='{{localize "DOCUMENT.Delete" type='classAbility'}}'
+              data-action='deleteDoc'
+            >
+              <i class='fas fa-trash'></i>
+            </a>
+          {{/if}}
+        </div>
+      </li>
+      {{/if}}
+{{/each}}
+</ul>
+
+<div><h4>Class Abilities Passive</h4></div>
+    <ul class='items-list'>
+    <li class='item flexrow items-header'>
+      <div class='item-name'>{{localize 'Name'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.generic.PoolBonus'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolBonusType'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolCost'}}</div>
+      <div class="item-name">{{localize 'IRONBOUND.Item.Abilities.FIELDS.poolCostType'}}</div>
+       <div class='item-controls'>
+        {{#if @root.editable}}
+          <a
+            class='item-control item-create'
+            title='{{localize "DOCUMENT.Create" type='Item'}}'
+            data-action='createDoc'
+            data-document-class='Item'
+            data-type='classAbility'
+          >
+            <i class='fas fa-plus'></i>
+            {{localize 'DOCUMENT.New' type='item'}}
+          </a>
+        {{/if}}
+      </div>
+    </li>
+{{#each classAbilities}}
+  {{#if this.system.passive}}
+    <li
+        class='item flexrow'
+        data-item-id='{{this._id}}'
+        data-drag='true'
+        data-document-class='Item'
+      >
+        <div class='item-name'>
+          <div class='item-image'>
+            <a class='rollable item-icon' data-roll-type='item' data-action='roll'>
+              <i class="fa-solid fa-square-info"></i>
+            </a>
+          </div>
+          <div>{{this.name}}</div>
+        </div>
+        <div>{{this.system.poolBonus}}</div>
+        <div>{{getPoolType this.system.poolBonusType}}</div>
+        <div>{{this.system.poolCost}}</div>
+        <div>{{getPoolType this.system.poolCostType}}</div>
+        <div class='item-controls'>
+          <a
+            class='item-control item-edit'
+            title='{{localize "DOCUMENT.Update" type='classAbility'}}'
+            data-action='viewDoc'
+          >
+            <i class='fas fa-edit'></i>
+          </a>
+          {{#if @root.editable}}
+            <a
+              class='item-control item-delete'
+              title='{{localize "DOCUMENT.Delete" type='classAbility'}}'
+              data-action='deleteDoc'
+            >
+              <i class='fas fa-trash'></i>
+            </a>
+          {{/if}}
+        </div>
+      </li>
+      {{/if}}
+{{/each}}
+</ul>
+</div>
