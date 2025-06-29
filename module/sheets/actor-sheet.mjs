@@ -491,6 +491,7 @@ export class IronboundActorSheet extends api.HandlebarsApplicationMixin(
    */
   static async _onRoll(event, target) {
     event.preventDefault();
+    console.log(target);
     const dataset = target.dataset;
 
     // Handle item rolls.
