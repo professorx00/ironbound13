@@ -39,6 +39,10 @@ export class IronboundActor extends Actor {
    * but have slightly different data preparation needs.
    */
   getRollData() {
-    return { ...super.getRollData(), ...(this.system.getRollData?.() ?? null) };
+    let data = {
+      ...super.getRollData(),
+      ...(this.system.getRollData?.() ?? null),
+    };
+    return data;
   }
 }

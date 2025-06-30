@@ -23,8 +23,6 @@ export class IronboundItemSheet extends api.HandlebarsApplicationMixin(
       createDoc: this._createEffect,
       deleteDoc: this._deleteEffect,
       toggleEffect: this._toggleEffect,
-      handleHasBoonCheckbox: this._handleHasBoonCheckbox,
-      handlePassiveCheckbox: this._handlePassiveCheckbox,
     },
     form: {
       submitOnChange: true,

@@ -509,3 +509,77 @@ overflow-y: auto;
 .ironbound .effects .item .effect-controls {
   border: none;
 }
+
+.boonBtn {
+	box-shadow:inset 0px 1px 3px 0px #91b8b3;
+	background:linear-gradient(to bottom, #768d87 5%, #6c7c7c 100%);
+	background-color:#768d87;
+	border-radius:5px;
+	border:1px solid #566963;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:11px 23px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #2b665e;
+  height:40px;
+}
+.boonBtn:hover {
+	background:linear-gradient(to bottom, #6c7c7c 5%, #768d87 100%);
+	background-color:#6c7c7c;
+}
+.boonBtn:active {
+	position:relative;
+	top:1px;
+}
+
+.boonNumber{
+  height:40px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  background: green;
+  display:flex;
+}
+
+.parentBoon {
+  display: grid;
+  grid-template-columns: 2fr repeat(3, 1fr) 2fr;
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 12px;
+  grid-row-gap: 0px;
+  }
+  .boonTitle{grid-area:  1 / 2 / 2 / 5; display: flex; justify-content: center; align-items: center;}
+  .boon1 { grid-area: 2 / 2 / 3 / 3; display: flex; justify-content: center; align-items: center;}
+  .boon2 {  grid-area:  2 / 3 / 3 / 4;; display: flex; justify-content: center; align-items: center;}
+  .boon3 { grid-area: 2 / 4 / 3 / 5; display: flex; justify-content: center; align-items: center;}
+  .boonforBtn { grid-area: 4 / 3 / 5 / 4;  display: flex; justify-content: center; align-items: center;}
+
+  .rollButton {
+    box-shadow: 3px 4px 0px 0px #1564ad;
+    background:linear-gradient(to bottom, #79bbff 5%, #378de5 100%);
+    background-color:#79bbff;
+    border-radius:5px;
+    border:1px solid #337bc4;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-family:Arial;
+    font-size:17px;
+    font-weight:bold;
+    padding:12px 44px;
+    text-decoration:none;
+    text-shadow:0px 1px 0px #528ecc;
+  }
+  .rollButton:hover {
+    background:linear-gradient(to bottom, #378de5 5%, #79bbff 100%);
+    background-color:#378de5;
+  }
+  .rollButton:active {
+    position:relative;
+    top:1px;
+  }
+  

@@ -39,6 +39,10 @@ export default class IronboundItemBase extends foundry.abstract.TypeDataModel {
       initial: 0,
     });
 
+    schema.formula = new fields.StringField({
+      initial: "",
+    });
+
     return schema;
   }
 }

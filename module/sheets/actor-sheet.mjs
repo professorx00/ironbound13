@@ -28,6 +28,8 @@ export class IronboundActorSheet extends api.HandlebarsApplicationMixin(
       deleteDoc: this._deleteDoc,
       toggleEffect: this._toggleEffect,
       roll: this._onRoll,
+      rollDamage: this._rollDamage,
+      info: this._showInfo,
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: "[data-drag]", dropSelector: null }],
@@ -230,7 +232,7 @@ export class IronboundActorSheet extends api.HandlebarsApplicationMixin(
    *
    * @param {object} context The context object to mutate
    */
-  _prepareItems(context) {
+  async _prepareItems(context) {
     // Initialize containers.
     // You can just use `this.document.itemTypes` instead
     // if you don't need to subdivide a given type like
@@ -258,7 +260,7 @@ export class IronboundActorSheet extends api.HandlebarsApplicationMixin(
     for (let i of this.document.items) {
       // Append to inventory.
       if (i.type === "classAbility") {
-        classAbilities.push(i)
+        classAbilities.push(i);
       }
       if (i.type === "speciesAbility") {
         speciesAbilities.push(i);
@@ -365,7 +367,6 @@ export class IronboundActorSheet extends api.HandlebarsApplicationMixin(
    */
   _onRender(context, options) {
     this.#dragDrop.forEach((d) => d.bind(this.element));
-    
 
     this.#disableOverrides();
     // You may want to add other special handling here
@@ -417,7 +418,7 @@ export class IronboundActorSheet extends api.HandlebarsApplicationMixin(
    */
   static async _viewDoc(event, target) {
     const doc = this._getEmbeddedDocument(target);
-    if(!doc.sheet.rendered){
+    if (!doc.sheet.rendered) {
       doc.sheet.render(true);
     }
   }
@@ -491,14 +492,25 @@ export class IronboundActorSheet extends api.HandlebarsApplicationMixin(
    */
   static async _onRoll(event, target) {
     event.preventDefault();
-    console.log(target);
     const dataset = target.dataset;
 
     // Handle item rolls.
+    let item;
     switch (dataset.rollType) {
       case "item":
-        const item = this._getEmbeddedDocument(target);
+        item = this._getEmbeddedDocument(target);
         if (item) return item.roll();
+        break;
+      case "heal":
+        item = this._getEmbeddedDocument(target);
+        console.log("heal", item);
+        if (item) return item.roll();
+        break;
+      case "damage":
+        item = this._getEmbeddedDocument(target);
+        console.log("damage", item);
+        if (item) return item.roll();
+        break;
     }
 
     // Handle rolls that supply the formula directly.
@@ -511,6 +523,30 @@ export class IronboundActorSheet extends api.HandlebarsApplicationMixin(
         rollMode: game.settings.get("core", "rollMode"),
       });
       return roll;
+    }
+  }
+
+  static async _rollDamage(event, target) {
+    event.preventDefault();
+    const dataset = target.dataset;
+    let item = this._getEmbeddedDocument(target);
+    let dialog = new CONFIG.IRONBOUND.RollDialog();
+    dialog.actor = this.actor;
+    dialog.item = item;
+    dialog.render(true);
+  }
+
+  static async _showInfo(event, target) {
+    event.preventDefault();
+    const dataset = target.dataset;
+    let item = this._getEmbeddedDocument(target);
+    console.log(item.description);
+    let info = document.getElementById("info" + item._id);
+    console.log(info);
+    if (info.classList.contains("hidden")) {
+      info.classList.remove("hidden");
+    } else {
+      info.classList.add("hidden");
     }
   }
 

@@ -9,6 +9,8 @@ import { IRONBOUND } from './helpers/config.mjs';
 // Import DataModel classes
 import * as models from './data/_module.mjs';
 
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
@@ -30,16 +32,19 @@ globalThis.ironbound = {
   models,
 };
 
-Hooks.once('init', function () {
+Hooks.once("init", function () {
   // Add custom constants for configuration.
-  CONFIG.IRONBOUND = IRONBOUND;
+  CONFIG.IRONBOUND = {
+    ...IRONBOUND,
+    RollDialog,
+  };
 
   /**
    * Set an initiative formula for the system
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: '1d20 + @abilities.dex.mod',
+    formula: "1d20 + @abilities.dex.mod",
     decimals: 2,
   };
 
@@ -73,7 +78,7 @@ Hooks.once('init', function () {
     scroll: models.IronboundScroll,
     species: models.IronboundSpecies,
     wand: models.IronboundWand,
-    weapons: models.IronboundWeapon
+    weapons: models.IronboundWeapon,
   };
 
   // Active Effects are never copied to the Actor,
@@ -84,14 +89,14 @@ Hooks.once('init', function () {
   const Actors = foundry.documents.collections.Actors;
   // Register sheet application classes
   Actors.unregisterSheet("core", foundry.appv1.sheets.ActorSheet);
-  Actors.registerSheet('ironbound', IronboundActorSheet, {
+  Actors.registerSheet("ironbound", IronboundActorSheet, {
     makeDefault: true,
-    label: 'IRONBOUND.SheetLabels.Actor',
+    label: "IRONBOUND.SheetLabels.Actor",
   });
   Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
-  Items.registerSheet('ironbound', IronboundItemSheet, {
+  Items.registerSheet("ironbound", IronboundItemSheet, {
     makeDefault: true,
-    label: 'IRONBOUND.SheetLabels.Item',
+    label: "IRONBOUND.SheetLabels.Item",
   });
 });
 
@@ -100,7 +105,7 @@ Hooks.once('init', function () {
 /* -------------------------------------------- */
 
 // If you need to add Handlebars helpers, here is a useful example:
-Handlebars.registerHelper('toLowerCase', function (str) {
+Handlebars.registerHelper("toLowerCase", function (str) {
   return str.toLowerCase();
 });
 
@@ -113,22 +118,94 @@ Handlebars.registerHelper("getPoolType", function (str) {
     d: "Physical",
     e: "Any",
   };
-  return pools[str]
+  return pools[str];
 });
 
 Handlebars.registerHelper("isPassive", function (bool) {
-  console.log(bool)
-  return !bool
-})
+  console.log(bool);
+  return !bool;
+});
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
-Hooks.once('ready', function () {
+Hooks.once("ready", function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-  Hooks.on('hotbarDrop', (bar, data, slot) => createDocMacro(data, slot));
+  Hooks.on("hotbarDrop", (bar, data, slot) => createDocMacro(data, slot));
 });
+
+/* -------------------------------------------- */
+/*  Roll Dialog                           */
+/* -------------------------------------------- */
+class RollDialog extends HandlebarsApplicationMixin(ApplicationV2) {
+  static DEFAULT_OPTIONS = {
+    id: "dialog-form",
+    position: {
+      width: 550,
+      height: 300,
+    },
+    window: {
+      frame: true,
+      positioned: true,
+      title: "yo yo",
+      icon: false,
+      minimizable: false,
+      resizable: false,
+    },
+    actions: {
+      addBoon: this._AddBoon,
+      removeBoon: this._RemoveBoon,
+      roll: this._roll,
+    },
+  };
+
+  static PARTS = {
+    div: { template: "./systems/ironbound/templates/dialog/rollDialog.hbs" },
+  };
+
+  boon = 0;
+
+  _prepareContext(options) {
+    console.log(options);
+    let actor = this.actor;
+    let item = this.item;
+    return {
+      actor,
+      item,
+      boon: this.boon,
+    };
+  }
+
+  static async _AddBoon() {
+    this.boon = this.boon + 1;
+    this.render(true);
+  }
+  static async _RemoveBoon() {
+    this.boon = this.boon - 1;
+    this.render(true);
+  }
+  static async _roll() {
+    let formula = "1d12";
+    let dice = 0;
+    if (this.boon < 0) {
+      dice = Math.abs(this.boon) + 1;
+      formula = dice + "d12kl";
+      await this.item.update({ "system.formula": formula });
+    } else if (this.boon > 0) {
+      dice = Math.abs(this.boon) + 1;
+      formula = dice + "d12kh";
+      await this.item.update({ "system.formula": formula });
+    } else {
+      await this.item.update({ "system.formula": formula });
+    }
+    await this.item.roll();
+
+    await this.item.update({ "system.formula": "" });
+    this.close();
+  }
+}
+
 
 /* -------------------------------------------- */
 /*  Hotbar Macros                               */
